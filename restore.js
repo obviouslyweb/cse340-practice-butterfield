@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Run with 'node restore.js 3000 3001'
 
 import { exec } from 'child_process';
@@ -63,6 +64,7 @@ class PortKiller {
             if (!pid) return null;
 
             return { pid, port };
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             // Process not found is an expected case
             return null;
@@ -73,6 +75,7 @@ class PortKiller {
         try {
             const { stdout } = await execAsync(this.commands.processInfo(pid));
             return stdout.trim();
+        // eslint-disable-next-line no-unused-vars
         } catch (error) {
             return 'Unknown Process';
         }
@@ -91,10 +94,12 @@ class PortKiller {
 }
 
 async function main() {
+    // eslint-disable-next-line no-undef
     const ports = process.argv.slice(2).map(Number).filter(Boolean);
 
     if (ports.length === 0) {
         console.error('Usage: node script.js <port1> <port2> ...');
+        // eslint-disable-next-line no-undef
         process.exit(1);
     }
 

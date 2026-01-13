@@ -1,0 +1,14 @@
+{
+  "name": "cse340-practice-butterfield",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon --env-file=.env server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
