@@ -107,26 +107,43 @@ app.get('/catalog', (req, res) => {
     });
 });
 // Course detail page (from catalog page) w/ route parameter handling
-app.get('/catalog/:courseId', (req, res) => {
-    // Extract course ID from URL
+app.get('/catalog/:courseId', (req, res, next) => {
     const courseId = req.params.courseId;
-    // Look up course in data
     const course = courses[courseId];
-    // If course doesn't exist, throw 404 error
+
+    // Return 404 if course isn't found
     if (!course) {
-        const err = new Error(`Course '${courseId}' not found`);
+        const err = new Error(`Course ${courseId} not found`);
         err.status = 404;
         return next(err);
     }
 
-    // Log parameter for debugging
-    console.log('Viewing course:', courseId);
+    // Get sort parameter (default to 'time')
+    const sortBy = req.query.sort || 'time';
 
-    // Render with course detail template
+    // Create a copy of sections to sort
+    let sortedSections = [...course.sections];
+
+    // Sort based on the parameter
+    switch (sortBy) {
+        case 'professor':
+            sortedSections.sort((a, b) => a.professor.localeCompare(b.professor));
+            break;
+        case 'room':
+            sortedSections.sort((a, b) => a.room.localeCompare(b.room));
+            break;
+        case 'time':
+        default:
+            // Keep original time order as default
+            break;
+    }
+
+    console.log(`Viewing course: ${courseId}, sorted by: ${sortBy}`);
+
     res.render('course-detail', {
-        // Getting details from JSON directly now
         title: `${course.id} - ${course.title}`,
-        course: course
+        course: { ...course, sections: sortedSections },
+        currentSort: sortBy
     });
 });
 
