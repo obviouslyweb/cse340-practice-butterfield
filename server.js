@@ -105,6 +105,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     // Add current year for copyright; USED IN FOOTER
     res.locals.currentYear = new Date().getFullYear();
+    // Add current time for greeting message
     res.locals.currentHour = new Date().getHours();
     res.locals.currentHalf = "AM";
     if (res.locals.currentHour > 13) {
