@@ -1,50 +1,27 @@
 /* eslint-disable no-undef */
-// import process from "./server.js";
 
 /**
- * Helper function to get the current greeting based on the time of day.
+ * Helper function to get the current greeting based on time.
  */
 const getCurrentGreeting = () => {
-    const currentHour = new Date().getHours();
+    const now = new Date();
+    const hour24 = now.getHours();
+    const minute = now.getMinutes().toString().padStart(2, '0');
 
-    if (currentHour < 12) {
-        return 'Good morning!';
+    const timeHalf = hour24 >= 12 ? 'PM' : 'AM';
+    const hour12 = hour24 % 12 || 12;
+
+    let greeting;
+    if (hour24 < 12) {
+        greeting = 'Good morning';
+    } else if (hour24 < 18) {
+        greeting = 'Good afternoon';
+    } else {
+        greeting = 'Good evening';
     }
 
-    if (currentHour < 18) {
-        return 'Good afternoon!';
-    }
-
-    return 'Good evening!';
+    return `${greeting}! It's currently ${hour12}:${minute} ${timeHalf}.`;
 };
-
-// app.use((req, res, next) => {
-//     // Add current year for copyright; USED IN FOOTER
-//     res.locals.currentYear = new Date().getFullYear();
-//     // Add current time for greeting message; USED IN HEADER
-//     res.locals.currentHour = new Date().getHours();
-//     res.locals.currentHalf = "AM";
-//     if (res.locals.currentHour > 13) {
-//         res.locals.currentHour -= 12;
-//         res.locals.currentHalf = "PM";
-//     }
-//     res.locals.currentMin = new Date().getMinutes();
-
-//     next();
-// });
-// // Global middleware for time-based greeting
-// app.use((req, res, next) => {
-//     const currentHour = new Date().getHours();
-//     if (currentHour < 12) {
-//         res.locals.greeting = 'morning';
-//     } else if (currentHour < 17) {
-//         res.locals.greeting = 'afternoon';
-//     } else {
-//         res.locals.greeting = 'evening';
-//     }
-
-//     next();
-// });
 
 /**
  * Middleware to add local variables to res.locals for use in all templates.
