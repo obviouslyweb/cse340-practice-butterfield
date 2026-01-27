@@ -1,8 +1,10 @@
 <%- include('../partials/header') %>
 <main>
     <h1>Uh oh...</h1>
-    <p>We are experiencing technical difficulties. We've been notified and are working to fix the issue!</p>
-    <img src="/images/500-error.png" alt="500 Server Error">
+    <p>We are experiencing technical difficulties. We've been notified and are working to fix the issue! In the meantime, please enjoy this spinning duck.</p>
+    <div class="img-center">
+        <img src="/images/duck-spin-no-background.gif">
+    </div>
     <p><a href="/">Return to homepage</a></p>
 
     <% if (NODE_ENV === 'development') { %>

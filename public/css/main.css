@@ -46,9 +46,9 @@ body {
         font-family: 'Quicksand', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 
-    &.blue-theme { background-color: #e3f2fd; }
-    &.green-theme { background-color: #e8f5e8; }
-    &.red-theme { background-color: #ffebee; }
+    &.blue-theme { border: 4px solid #e3f2fd; }
+    &.green-theme { border: 4px solid #e8f5e8; }
+    &.red-theme { border: 4px solid #ffebee; }
 }
 
 /* Center duck gif */
