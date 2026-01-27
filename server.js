@@ -41,6 +41,15 @@ const courses = { // Course data - place this after imports, before routes
             { time: '3:00 PM', room: 'MC 307', professor: 'Brother Thompson' }
         ]
     },
+    'CSE340': {
+        id: 'CSE340',
+        title: 'Web Backend Development',
+        description: 'Learn how to develop scalable, dynamic web applications through Express and nodeJS.',
+        credits: 3,
+        sections: [
+            { time: '1:00 PM', room: 'STC 231', professor: 'Sister Keys' }
+        ]
+    },
     'ENG101': {
         id: 'ENG101',
         title: 'Academic Writing',
