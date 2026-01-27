@@ -130,6 +130,18 @@ app.use((req, res, next) => {
 
     next();
 });
+// Global middleware for random theme selection
+app.use((req, res, next) => {
+    // Define themes
+    const themes = ['blue-theme', 'green-theme', 'red-theme'];
+
+    // Choose random theme
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+    res.locals.bodyClass = randomTheme;
+    console.log(res.locals.bodyClass);
+
+    next();
+});
 
 
 /* 

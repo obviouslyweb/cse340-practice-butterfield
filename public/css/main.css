@@ -45,6 +45,10 @@ body {
     h1, h2, h3, h4, h5 {
         font-family: 'Quicksand', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
+
+    &.blue-theme { background-color: #e3f2fd; }
+    &.green-theme { background-color: #e8f5e8; }
+    &.red-theme { background-color: #ffebee; }
 }
 
 /* Center duck gif */
