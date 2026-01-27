@@ -4,12 +4,14 @@
 // RUN FOR DEV: pnpm run dev
 // RUN FOR PROD: pnpm run start (not functional locally)
 
+
 /* 
 Imports
 */
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
+
 
 /* 
 Declare important variables
@@ -63,25 +65,27 @@ const courses = { // Course data - place this after imports, before routes
     }
 };
 
+
 /* 
 Setup Express Server
 */
 const app = express();
+
 
 /* 
 Configure Express middleware
 */
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
+
 // Set EJS as the templating engine here
 app.set('view engine', 'ejs');
+
 // Tell Express where the templates are located
 app.set('views', path.join(__dirname, 'src/views'));
 
-/*
-Global template variables middleware
-(Make common variables available to all EJS templates without having to pass them individually from each route handler)
-*/
+// Global template variables middleware
+// (Make common variables available to all EJS templates without having to pass them individually from each route handler)
 app.use((req, res, next) => {
     // Make NODE_ENV available to all templates
     res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
@@ -89,6 +93,43 @@ app.use((req, res, next) => {
     // Continue to next middleware/route handler
     next();
 });
+// Log incoming requests to console
+app.use((req, res, next) => {
+    // Skip logging for routes that start with /.
+    if (!req.path.startsWith('/.')) {
+        console.log(`${req.method} ${req.url}`);
+    }
+    next();
+});
+// Add global data to all templates
+app.use((req, res, next) => {
+    // Add current year for copyright; USED IN FOOTER
+    res.locals.currentYear = new Date().getFullYear();
+    res.locals.currentHour = new Date().getHours();
+    res.locals.currentHalf = "AM";
+    if (res.locals.currentHour > 13) {
+        res.locals.currentHour -= 12;
+        res.locals.currentHalf = "PM";
+    }
+    res.locals.currentMin = new Date().getMinutes();
+
+    next();
+});
+// Global middleware for time-based greeting
+app.use((req, res, next) => {
+    const currentHour = new Date().getHours();
+    // console.log(currentHour);
+    if (currentHour < 12) {
+        res.locals.greeting = 'morning';
+    } else if (currentHour < 17) {
+        res.locals.greeting = 'afternoon';
+    } else {
+        res.locals.greeting = 'evening';
+    }
+
+    next();
+});
+
 
 /* 
 Declare routes
@@ -155,6 +196,7 @@ app.get('/catalog/:courseId', (req, res, next) => {
         currentSort: sortBy
     });
 });
+
 
 /*
 Error declaration
@@ -224,6 +266,7 @@ if (NODE_ENV.includes('dev')) {
         console.error('Failed to start WebSocket server:', error);
     }
 }
+
 
 /*  
 Start server & listen on ports
