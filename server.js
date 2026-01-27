@@ -1,11 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
+/*
+Import express components
+*/
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Import MVC components
+/*
+Import MVC components
+*/
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
 
@@ -42,7 +47,6 @@ app.use('/', routes);
 /**
  * Error Handling
  */
-
 // 404 handler
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
@@ -81,7 +85,7 @@ app.use((err, req, res, next) => {
 });
 
 /**
- * Start WebSocket Server in Development Mode; used for live reloading
+ * Start WebSocket Server in dev mode (used for live reload)
  */
 if (NODE_ENV.includes('dev')) {
     const ws = await import('ws');
@@ -103,7 +107,7 @@ if (NODE_ENV.includes('dev')) {
 }
 
 /**
- * Start Server
+ * Start server
  */
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
