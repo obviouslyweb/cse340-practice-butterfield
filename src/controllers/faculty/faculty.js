@@ -16,7 +16,7 @@ const facultyDetailPage = (req, res, next) => {
     const facultyId = req.params.facultyId;
     const faculty = getFacultyById(facultyId);
 
-    // If faculty doesn't exist, create 404 error
+    // If faculty member doesn't exist, create 404 error
     if (!faculty) {
         const err = new Error(`Faculty ${facultyId} not found`);
         err.status = 404;
