@@ -1,4 +1,8 @@
- /* eslint-disable no-undef */
+// "node server.js" for prod
+// "pnpm run dev" for dev
+// DON'T FORGET TO VERIFY ENV!
+
+/* eslint-disable no-undef */
 
 /*
 Import express components
