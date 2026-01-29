@@ -5,9 +5,10 @@ const facultyListPage = (req, res) => {
     const sortBy = req.query.sort;
     const faculty = getSortedFaculty(sortBy);
 
-    res.render('faculty', {
+    res.render('faculty/list', {
         title: 'Faculty List',
-        faculty: faculty
+        faculty: faculty,
+        currentSort: sortBy
     });
 };
 
@@ -23,7 +24,7 @@ const facultyDetailPage = (req, res, next) => {
         return next(err);
     }
 
-    res.render('faculty-detail', {
+    res.render('faculty/detail', {
         title: `${faculty.name} - ${faculty.title}`,
         faculty,
         facultyId
