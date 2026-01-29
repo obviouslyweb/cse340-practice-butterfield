@@ -84,10 +84,11 @@ const getFacultyById = (facultyId) => {
 };
 
 const getSortedFaculty = (sortBy) => {
-    // Validate sortBy parameter (name, department, or title), default to 'department' if invalid
+    // Validate sortBy parameter (name, department, or title)
+    // I defaulted this to 'name' if invalid for proper sorting function, just to make my life easier
     const allowed = ["name", "department", "title"];
     if (!allowed.includes(sortBy)) {
-        sortBy = 'department';
+        sortBy = 'name';
     }
 
     // Create an array of all faculty members
