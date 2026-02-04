@@ -18,8 +18,8 @@
         </div>
 
         <div class="section-list">
-            <% if (course.sections && course.sections.length > 0) { %>
-                <% course.sections.forEach(section => { %>
+            <% if (sections && sections.length > 0) { %>
+                <% sections.forEach(section => { %>
                     <div class="section-card">
                         <div class="section-time"><%= section.time %></div>
                         <div class="section-room">Room: <%= section.room %></div>
