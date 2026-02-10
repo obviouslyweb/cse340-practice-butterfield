@@ -92,6 +92,12 @@ const addLocalVariables = (req, res, next) => {
     // Use setHeadAssetsFunctionality to determine priority of CSS & JS files depending on called view
     setHeadAssetsFunctionality(res);
 
+    // Convenience variable for UI state based on session state
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+
     // Continue to the next middleware or route handler
     next();
 };
