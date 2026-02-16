@@ -1,5 +1,6 @@
 {
   "name": "cse340-practice-butterfield",
+  "packageManager": "pnpm@10.28.0",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
