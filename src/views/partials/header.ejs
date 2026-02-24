@@ -68,8 +68,17 @@
             <% messages[type].forEach(message => { %>
                 <div class="flash <%= type %>">
                     <%= message %>
+                    <button type="button" name="Close message">X</button>
                 </div>
             <% }); %>
         <% }); %>
     </div>
+
+    <script>
+        document.querySelectorAll('.flash button').forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.flash').remove();
+            });
+        });
+    </script>
 <% } %>
