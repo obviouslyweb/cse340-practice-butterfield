@@ -50,7 +50,12 @@ const processRegistration = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        console.log(errors); // Log validation errors to console for debugging
+        // ERRORS DISCOVERED
+        // Add flash messages
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        // Redirect back to form without saving
         return res.redirect('/register');
     }
 
@@ -62,21 +67,21 @@ const processRegistration = async (req, res) => {
         const doesEmailExist = await emailExists(email);
 
         if (doesEmailExist) {
-            console.log('Email already registered');
+            req.flash('warning', "An account already exists with this email address.");
             return res.redirect('/register');
         }
 
+        // No further errors; proceed with saving
         // Hash the password before saving to database
         const hashedPassword = await bcrypt.hash(password, 10);
-
         // Save user to database with hashed password
         await saveUser(name, email, hashedPassword);
 
-        console.log(`User ${name} successfully registered`);
-        return res.redirect('/register/list');
-        // NOTE: Later when we add authentication, we'll change this to require login first
+        req.flash('success', "Account successfully registered! You can now login with your new account.");
+        return res.redirect('/login');
     } catch (error) {
-        console.log(`Error encountered: ${error}`);
+        console.log(`Error encountered during account registration: ${error}`);
+        req.flash('error', "An unexpected error occured and we were unable to complete your account registration. Please try again later.");
         return res.redirect('/register');
     }
 };

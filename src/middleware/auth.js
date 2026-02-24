@@ -11,6 +11,7 @@ const requireLogin = (req, res, next) => {
         next();
     } else {
         // User is not authenticated - redirect to login
+        req.flash('error', 'You are not authorized to view the content you were trying to access. Please login and try again.');
         res.redirect('/login');
     }
 };

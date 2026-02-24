@@ -54,3 +54,22 @@
             </ul>
         </nav>
     </header>
+
+    <%
+        const messages = flash();
+        const hasMessages = Object.values(messages).some(arr => arr.length > 0);
+    %>
+
+    <!-- Display flash messages, if any exist -->
+    <% if (hasMessages) { %>
+    <div class="flash-messages">
+        <!-- Iterate through all message types dynamically -->
+        <% Object.keys(messages).forEach(type => { %>
+            <% messages[type].forEach(message => { %>
+                <div class="flash <%= type %>">
+                    <%= message %>
+                </div>
+            <% }); %>
+        <% }); %>
+    </div>
+<% } %>

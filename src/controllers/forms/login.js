@@ -36,11 +36,15 @@ const processLogin = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        console.log(errors);
+        // ERRORS FOUND
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
         res.redirect('/login');
         return;
     }
 
+    // No errors found; proceed with login process
     // Extract email and password from req.body
     const { email, password } = req.body;
 
@@ -48,6 +52,7 @@ const processLogin = async (req, res) => {
         let user = await findUserByEmail(email);
         if (!user) {
             console.log(`User not found: ${user}`)
+            req.flash('error', 'Invalid email or password.');
             return res.redirect('/login');
         }
 
@@ -55,6 +60,7 @@ const processLogin = async (req, res) => {
         let passwordVerified = await verifyPassword(password, user.password);
         if (!passwordVerified) {
             console.log("Invalid password");
+            req.flash('error', 'Invalid email or password.');
             return res.redirect('/login');
         }
 
@@ -63,10 +69,12 @@ const processLogin = async (req, res) => {
 
         // Store user in session, redirect to dashboard
         req.session.user = user;
+        req.flash('success', `Welcome back, ${user.name}!`);
         res.redirect('/dashboard');
 
     } catch (error) {
-        console.log(`Error encountered in login controller: ${error}`)
+        console.log(`Error encountered in login controller: ${error}`);
+        req.flash('error', 'Something went wrong when trying to log you in. Please try again later.');
         return res.redirect('/login');
     }
 };
@@ -81,6 +89,7 @@ const processLogout = (req, res) => {
     if (!req.session) {
         // If no session exists, there's nothing to destroy,
         // so we just redirect the user back to the home page
+        req.flash('warning', "No user is logged in that can be logged out. What are you trying to do...?");
         return res.redirect('/');
     }
 
@@ -88,7 +97,7 @@ const processLogout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             // If something goes wrong while removing the session from the database:
-            console.error('Error destroying session:', err);
+            console.error('Error destroying session on logout:', err);
 
             /**
              * Clear the session cookie from the browser anyway, so the client
