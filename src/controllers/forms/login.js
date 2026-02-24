@@ -12,11 +12,14 @@ const loginValidation = [
         .trim()
         .isEmail()
         .withMessage('Please provide a valid email address')
-        .normalizeEmail(),
-
+        .normalizeEmail()
+        .isLength({ max: 255 })
+        .withMessage('Email address is too long; please use a shorter email address.'),
     body('password')
-        .isLength({ min: 8 })
-        .withMessage('Password is required')
+        .notEmpty()
+        .withMessage('Password must not be empty')
+        .isLength({ min: 8, max: 128 })
+        .withMessage('Password must be between 8 and 128 characters')
 ];
 
 /**
