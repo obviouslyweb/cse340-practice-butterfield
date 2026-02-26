@@ -151,3 +151,24 @@
         }
     }
 }
+
+.faculty-profile {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    position: relative;
+    padding-top: 15px;
+    transition: box-shadow 0.2s ease;
+    gap: 15px;
+    align-items: center;
+
+    .faculty-photo {
+        width: 150px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        display: block;
+        border-radius: 100%;
+        margin-bottom: 7px;
+        background: url('https://placehold.co/480') center / cover no-repeat;
+    }
+}

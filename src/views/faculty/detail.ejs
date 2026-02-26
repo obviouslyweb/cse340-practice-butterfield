@@ -1,9 +1,12 @@
 <%- include('../partials/header') %>
 <main>
     <div class="faculty-profile">
-        <h1><%= faculty.firstName %> <%= faculty.lastName %></h1>
-        <p class="faculty-title"><%= faculty.title %></p>
-        <p class="faculty-department"><%= faculty.department %> Department</p>
+        <img class="faculty-photo" src="/images/faculty/<%= faculty.firstName %>-<%= faculty.lastName %>.jpg" alt="<%= faculty.firstName %> <%= faculty.lastName %>">
+        <div class="faculty-profile-right">
+            <h1><%= faculty.firstName %> <%= faculty.lastName %></h1>
+            <p class="faculty-title"><%= faculty.title %></p>
+            <p class="faculty-department"><%= faculty.department %> Department</p>
+        </div>
     </div>
     
     <div class="faculty-contact">
