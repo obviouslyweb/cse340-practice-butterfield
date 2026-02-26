@@ -5,6 +5,7 @@ Add import statements for controllers and middleware
 import { Router } from 'express';
 // Middleware import
 import { addDemoHeaders } from '../middleware/demo/headers.js';
+import { contactValidation, registrationValidation, loginValidation, updateAccountValidation } from '../middleware/validation/forms.js';
 // Controllers (for page routing)
 import { catalogPage, courseDetailPage } from './catalog/catalog.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
@@ -67,13 +68,13 @@ router.get('/faculty', facultyListPage);
 router.get('/faculty/:facultySlug', facultyDetailPage);
 
 // Contact form routes
-router.use('/contact', contactRoutes);
+router.use('/contact', contactValidation, contactRoutes);
 
 // Registration routes
-router.use('/register', registrationRoutes);
+router.use('/register', registrationValidation, updateAccountValidation, registrationRoutes);
 
 // Login routes (form and submission)
-router.use('/login', loginRoutes);
+router.use('/login', loginValidation, loginRoutes);
 
 // Authentication-related routes at root level
 router.get('/logout', processLogout);
