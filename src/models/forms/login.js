@@ -9,19 +9,21 @@ import db from '../db.js';
  */
 const findUserByEmail = async (email) => {
     const query = `
-        SELECT id, name, LOWER($1), password, created_at
+        SELECT 
+            users.id, 
+            users.name, 
+            users.email, 
+            users.password, 
+            users.created_at,
+            roles.role_name AS "roleName"
         FROM users
-        WHERE LOWER(email) = LOWER($1)
+        INNER JOIN roles ON users.role_id = roles.id
+        WHERE LOWER(users.email) = LOWER($1)
         LIMIT 1
     `;
-
+    // ($1) used to escape email
     const result = await db.query(query, [email]);
-
-    if (result.rows.length === 0) {
-        return null;
-    }
-
-    return result.rows[0];
+    return result.rows[0] || null;
 };
 
 /**

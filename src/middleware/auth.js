@@ -11,9 +11,35 @@ const requireLogin = (req, res, next) => {
         next();
     } else {
         // User is not authenticated - redirect to login
-        req.flash('error', 'You are not authorized to view the content you were trying to access. Please login and try again.');
+        req.flash('error', 'You must be logged in to access this page.');
         res.redirect('/login');
     }
 };
 
-export { requireLogin };
+/**
+ * Middleware factory to require specific role for route access
+ * Returns middleware that checks if user has the required role
+ * 
+ * @param {string} roleName - The role name required (e.g., 'admin', 'user')
+ * @returns {Function} Express middleware function
+ */
+const requireRole = (roleName) => {
+    return (req, res, next) => {
+        // Check if user is logged in first
+        if (!req.session || !req.session.user) {
+            req.flash('error', 'You must be logged in to access this page.');
+            return res.redirect('/login');
+        }
+
+        // Check if user's role matches the required role
+        if (req.session.user.roleName !== roleName) {
+            req.flash('error', 'You do not have permission to access this page.');
+            return res.redirect('/');
+        }
+
+        // User has required role, continue
+        next();
+    };
+};
+
+export { requireLogin, requireRole };

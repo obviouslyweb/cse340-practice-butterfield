@@ -138,6 +138,39 @@
                 }
             }
         }
+
+        .user-actions {
+            margin-top: -5px;
+            margin-bottom: 5px;
+
+            :is(a, button) {
+                display: inline-flex;
+                align-items: center;
+                text-decoration: none;
+                border: 2px solid #2c5aa0;
+                color: #2c5aa0;
+                padding: 6px;
+                margin: 0;
+                border-radius: 5px;
+                height: 35px;
+                background: none;
+                font-size: 1rem;
+                font-family: inherit;
+                cursor: pointer;
+                box-sizing: border-box;
+                transition: all 0.2s;
+                margin-right: 3px;
+
+                &:hover, &:active  {
+                    transform: scale(1.1);
+                }
+                
+                &.warning {
+                    border-color: #dc3545;
+                    color: #dc3545;
+                }   
+            }
+        }
     }
 
     .no-users {
